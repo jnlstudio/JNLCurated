@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JNL STUDIO Jewellery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+<script>(()=>{const r=document.documentElement;r.classList.add('js');let g='2';try{const v=localStorage.getItem('jnl-finish');if(v==='0'||v==='1'||v==='2')g=v}catch(e){}if(g!=='0')r.classList.add('g'+g)})()</script>
+<style>
+:root{--bg:#0c0a09;--panel:#141211;--ink:#fafaf9;--soft:#a8a29e;--line:rgba(255,255,255,.08);--ease:cubic-bezier(.16,1,.3,1);--spring:cubic-bezier(.34,1.56,.64,1)}
+*{box-sizing:border-box;margin:0}
+html{background:var(--bg);scroll-behavior:smooth;scroll-padding-top:96px}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.6 Geist,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+ul{list-style:none;padding:0}
+button,input{font:inherit}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.wrap{max-width:1280px;margin:0 auto;padding:0 clamp(16px,3vw,32px)}
+h1,h2,h3{font-weight:700;line-height:1;text-wrap:balance}
+h2{font-size:clamp(2.25rem,5vw,3rem);letter-spacing:-.025em;margin-bottom:16px}
+.sec-lead{color:var(--soft);font-size:1.125rem;max-width:44ch}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:56px;padding:0 32px;border:0;border-radius:999px;background:var(--ink);color:#0c0a09;font-weight:500;letter-spacing:-.01em;cursor:pointer;transition:transform .35s var(--spring),background-color .25s}
+.btn:hover{transform:scale(1.02)}
+.btn:active{transform:scale(.96)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.ghost:hover{background:rgba(255,255,255,.08)}
+.btn.sm{height:44px;padding:0 24px;font-size:14px}
+
+/* nav */
+header{position:fixed;inset:0 0 auto;z-index:50;display:flex;justify-content:center;padding:16px clamp(16px,3vw,32px);animation:drop .9s var(--spring) both}
+@keyframes drop{from{transform:translateY(-100px)}}
+.bar{width:100%;max-width:1280px;display:flex;align-items:center;justify-content:space-between;padding:10px 12px 10px 24px;border-radius:999px;border:1px solid transparent;transition:background-color .5s,border-color .5s,padding .5s}
+header.on .bar{background:rgba(24,24,27,.7);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-color:var(--line)}
+.logo{display:flex;align-items:center;gap:8px;font-weight:600;font-size:1rem;letter-spacing:.16em}
+.links{display:flex;gap:40px;font-size:14px;color:var(--soft)}
+.links a{transition:color .2s}
+.links a:hover{color:var(--ink)}
+.burger{display:none;background:none;border:0;color:var(--ink);padding:8px;cursor:pointer}
+.menu{position:fixed;inset:0;z-index:40;background:var(--bg);padding:120px 24px 32px;display:flex;flex-direction:column;gap:20px;font-size:2rem;font-weight:600;letter-spacing:-.03em;visibility:hidden;opacity:0;transform:translateY(-20px);transition:opacity .3s,transform .3s var(--ease),visibility .3s}
+.menu.open{visibility:visible;opacity:1;transform:none}
+
+/* hero */
+.hero{position:relative;min-height:100dvh;display:flex;align-items:center;padding:96px 0 48px;background:#000;overflow:hidden}
+.hero-art{position:absolute;top:50%;right:-4%;width:min(64vw,920px);height:125vh;transform:translateY(-50%);opacity:0;animation:art 1.5s var(--ease) .3s forwards;-webkit-mask-image:linear-gradient(to right,transparent 5%,#000 36%);mask-image:linear-gradient(to right,transparent 5%,#000 36%)}
+.hero-art img{width:100%;height:100%;object-fit:cover;object-position:50% 50%;transition:transform 1.5s var(--ease),filter 1.5s var(--ease)}
+.hero-art:hover img{transform:scale(1.04);filter:brightness(.92) contrast(1.08)}
+@keyframes art{from{opacity:0;scale:.9}to{opacity:1;scale:1}}
+.hero .wrap{position:relative;width:100%}
+.hero-in{max-width:640px}
+.tag{display:inline-block;padding:4px 12px;margin-bottom:24px;border-radius:999px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.04);font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:#e7e5e4}
+h1{font-size:clamp(3rem,8vw,6rem);line-height:.9;letter-spacing:-.05em;margin-bottom:32px}
+h1 em{font-weight:400;color:rgba(255,255,255,.7)}
+.hero p{color:#d6d3d1;font-size:1.125rem;max-width:32ch;margin-bottom:40px}
+.acts{display:flex;flex-wrap:wrap;gap:8px}
+.load{opacity:0;transform:translateY(30px);animation:up .8s var(--ease) var(--d,0s) forwards}
+@keyframes up{to{opacity:1;transform:none}}
+
+/* shop */
+.shop{padding:clamp(96px,10vw,128px) 0}
+.cards{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;margin-top:64px}
+.card{grid-column:span 4;cursor:pointer}
+.card:nth-child(3n+2){margin-top:64px}.card:nth-child(3n){margin-top:32px}
+.crop{position:relative;overflow:hidden;border-radius:2rem;background:var(--panel)}
+.crop img{width:100%;height:100%;object-fit:cover;object-position:var(--p,50% 50%);transform:scale(var(--z,1.12));transition:transform 1s var(--ease)}
+.card .crop{aspect-ratio:4/5}
+.card:hover img,.tile:hover img{transform:scale(calc(var(--z,1.12) + .06))}
+.crop .alt{position:absolute;inset:0;opacity:0;transition:opacity .6s var(--ease),transform 1s var(--ease)}
+.card:hover .alt{opacity:1}
+.meta{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:16px 4px 0;font-size:1.125rem;font-weight:500;letter-spacing:-.02em}
+.meta span:last-child{color:var(--soft);font-weight:400}
+.more{display:inline-block;margin-top:64px;font-size:14px;font-weight:600;border-bottom:1px solid currentColor;padding-bottom:2px}
+
+/* process */
+.process{position:relative;padding:clamp(96px,12vw,160px) 0;background:#09090b;overflow:clip}
+.proc-art{position:absolute;left:-10vw;top:-40px;width:60vw;max-width:820px;aspect-ratio:1;opacity:.26;-webkit-mask-image:radial-gradient(closest-side,#000 40%,transparent);mask-image:radial-gradient(closest-side,#000 40%,transparent)}
+.proc-art img{width:100%;height:100%;object-fit:cover}
+.proc{position:relative;display:grid;grid-template-columns:5fr 7fr;gap:48px;align-items:start}
+.proc-l{position:sticky;top:128px}
+.proc-l h2{font-size:clamp(2.5rem,6vw,3.75rem);letter-spacing:-.05em;line-height:1.05;margin-bottom:24px}
+.steps{display:grid;gap:96px;padding:64px 0}
+.step{position:relative;padding-left:clamp(32px,5vw,64px);border-left:1px solid rgba(255,255,255,.1)}
+.step:nth-child(even){margin-left:clamp(0px,7vw,96px)}
+.num{position:absolute;left:-20px;top:-4px;width:40px;height:40px;display:grid;place-items:center;border-radius:50%;background:#18181b;border:1px solid rgba(255,255,255,.12);font-size:12px;color:var(--soft)}
+.step h3{font-size:1.5rem;font-weight:500;letter-spacing:-.02em;margin-bottom:12px}
+.step p{color:var(--soft);max-width:38ch}
+
+/* bento */
+.arch{padding:clamp(96px,10vw,128px) 0}
+.bento{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:clamp(240px,27vw,340px);gap:24px;margin-top:64px}
+.tile{position:relative;overflow:hidden;border-radius:2.5rem;background:var(--panel);cursor:pointer;display:block}
+.tile.wide{grid-column:span 2}
+.tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:var(--p,50% 50%);transform:scale(var(--z,1.12));transition:transform 1s var(--ease)}
+.tile::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.72),transparent 58%)}
+.tile div{position:absolute;z-index:1;left:clamp(20px,3vw,32px);right:clamp(20px,3vw,32px);bottom:clamp(20px,3vw,28px)}
+.tile h3{font-size:clamp(1.375rem,2.2vw,1.875rem);font-weight:500;letter-spacing:-.03em;line-height:1.1}
+.tile p{font-size:14px;color:#d6d3d1;margin-top:6px}
+
+/* notes */
+.notes{position:relative;padding:clamp(120px,14vw,192px) 0;background:linear-gradient(to bottom,#09090b,#0a0a0a);overflow:clip}
+.notes-art{position:absolute;right:-8vw;top:50%;width:68vw;max-width:980px;aspect-ratio:1;translate:0 -50%;opacity:.26;pointer-events:none;-webkit-mask-image:radial-gradient(closest-side,#000 34%,transparent);mask-image:radial-gradient(closest-side,#000 34%,transparent)}
+.notes-art img{width:100%;height:100%;object-fit:cover}
+.notes .wrap{position:relative}
+.notes-h{text-align:center;margin-bottom:96px}
+.notes-h svg{width:48px;height:48px;margin:0 auto 32px;color:var(--soft)}
+.notes-h h2{font-size:clamp(2.75rem,7vw,4.5rem);letter-spacing:-.05em}
+.nt{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;align-items:start}
+.note{grid-column:span 4;padding:clamp(28px,3vw,40px);border-radius:2rem;background:rgba(18,16,15,.68);border:1px solid rgba(255,255,255,.06);transition:transform .6s var(--ease),border-color .3s}
+.note:hover{transform:translateY(-6px);border-color:rgba(255,255,255,.16)}
+.note:nth-child(2){margin-top:-32px}.note:nth-child(3){margin-top:48px}.note:nth-child(4){grid-column:2/span 5}.note:nth-child(5){grid-column:7/span 5;margin-top:32px}
+.note p{font-size:1.125rem;line-height:1.55;letter-spacing:-.01em;color:#e7e5e4}
+.note small{display:block;margin-top:32px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--soft)}
+
+/* statement */
+.state{position:relative;padding:clamp(140px,18vw,192px) 0;background:#000;overflow:hidden;text-align:center}
+.state>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 40%;opacity:.3;-webkit-mask-image:radial-gradient(closest-side,#000 30%,transparent);mask-image:radial-gradient(closest-side,#000 30%,transparent)}
+.state .wrap{position:relative}
+.state svg{width:64px;height:64px;margin:0 auto 32px;color:var(--ink);opacity:.72}
+.state h2{font-size:clamp(2.75rem,7.5vw,5.25rem);letter-spacing:-.05em;margin-bottom:28px}
+.state p{color:#d6d3d1;font-size:1.125rem;max-width:44ch;margin:0 auto}
+
+/* newsletter */
+.join{padding:clamp(48px,6vw,96px) clamp(16px,3vw,32px);background:linear-gradient(to bottom,#000,var(--bg))}
+.panel{position:relative;max-width:1280px;margin:0 auto;border-radius:2.5rem;overflow:hidden;padding:clamp(72px,10vw,120px) 24px;text-align:center}
+.panel>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;transform:scale(1.05)}
+.panel::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.52)}
+.panel>div{position:relative;z-index:1}
+.panel h2{font-size:clamp(2.25rem,5.5vw,3.75rem);letter-spacing:-.04em}
+.panel p{max-width:38ch;margin:0 auto 32px;color:#e7e5e4;font-size:1.125rem}
+.mail{margin:16px auto 0!important;font-size:.9375rem!important;color:#e7e5e4}
+.mail a{text-decoration:underline;text-underline-offset:3px}
+
+/* footer */
+footer{position:relative;padding:128px 0 40px;background:#09090b;border-top:1px solid rgba(255,255,255,.05);overflow:hidden}
+.ghost-mark{position:absolute;left:50%;top:40px;transform:translateX(-50%);font-size:clamp(3.5rem,13.5vw,13rem);font-weight:700;line-height:1;letter-spacing:-.05em;white-space:nowrap;color:rgba(255,255,255,.035);pointer-events:none}
+.fgrid{position:relative;display:grid;grid-template-columns:5fr 7fr;gap:48px}
+.fbrand b{display:block;font-size:clamp(2.5rem,5vw,4rem);letter-spacing:-.05em;line-height:1}
+.fbrand i{display:block;margin:12px 0 20px;font:italic 400 1.375rem/1.2 'Instrument Serif',serif;color:#d6d3d1}
+.fbrand p{color:#d6d3d1;max-width:34ch}
+.fcols{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.fcols h3{font-size:14px;font-weight:600;margin-bottom:20px}
+.fcols li{margin-bottom:12px;font-size:14px;color:var(--soft)}
+.fcols a{transition:color .2s}
+.fcols a:hover{color:var(--ink)}
+.legal{position:relative;margin-top:72px;padding-top:24px;border-top:1px solid rgba(255,255,255,.06);font-size:13px;line-height:1.6;color:#8a8580}
+.legal a{text-decoration:underline;text-underline-offset:2px}
+
+/* reveal */
+.js [data-r]{opacity:0;transform:translateY(var(--y,40px))}
+.js [data-r=left]{transform:translateX(-24px)}
+.js [data-r=scale]{transform:scale(.95)}
+.js [data-r=art]{transform:translateX(-100px)}
+.js [data-r=fade]{transform:none}
+.js [data-r].in{opacity:1;transform:none;transition:opacity .8s var(--ease) var(--d,0ms),transform .8s var(--ease) var(--d,0ms)}
+.js .proc-art[data-r].in{opacity:.26;transition-duration:1.2s}
+.js .notes-art[data-r=art2]{transform:translateX(100px)}
+.js .notes-art[data-r].in{opacity:.26;transition-duration:1.2s}
+.js .note[data-r].in:hover{transform:translateY(-6px);transition-delay:0ms}
+
+@media (max-width:860px){
+  .links,header .btn{display:none}
+  .burger{display:block}
+  .bar{padding:8px 8px 8px 20px}
+  .hero{align-items:flex-end;padding-bottom:40px}
+  .hero-art{right:-22%;top:0;width:128vw;height:72vh;transform:none;-webkit-mask-image:linear-gradient(to bottom,#000 55%,transparent);mask-image:linear-gradient(to bottom,#000 55%,transparent)}
+  .cards{grid-template-columns:minmax(0,1fr);gap:40px}
+  .nt{grid-template-columns:minmax(0,1fr)}
+  .card{grid-column:1/-1;margin-top:0!important}
+  .proc{grid-template-columns:1fr}
+  .proc-l{position:static}
+  .steps{gap:56px;padding:24px 0 0 20px}
+  .step:nth-child(even){margin-left:0}
+  .bento{grid-template-columns:1fr 1fr;grid-auto-rows:220px;gap:12px}
+  .bento .tile:first-child{grid-column:1/-1}
+  .tile{border-radius:1.75rem}
+  .note,.note:nth-child(4),.note:nth-child(5){grid-column:1/-1;margin-top:0!important}
+  .notes-art{right:-30vw;width:140vw;top:42%}
+  .notes-h{margin-bottom:56px}
+  .fgrid{grid-template-columns:1fr}
+}
+@media (max-width:520px){.fcols{grid-template-columns:1fr 1fr}}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0ms!important;transition-duration:.01ms!important;transition-delay:0ms!important}
+  .js [data-r]{opacity:1!important;transform:none!important}
+  .js .proc-art[data-r]{opacity:.26!important}
+  .js .notes-art[data-r]{opacity:.26!important}
+}
+</style>
+<style id="finishes">
+:root{--gold:#d8bb7a;--gold-hi:#f4e6bf;--gold-lo:#a9843f;--metal:linear-gradient(105deg,#a9843f 0%,#d8bb7a 28%,#f6eac9 48%,#d8bb7a 66%,#a9843f 100%)}
+/* level 1: gold as a small accent */
+html.g1 h1 em,html.g2 h1 em{font-family:'Instrument Serif',serif;font-size:1.13em;letter-spacing:-.025em;line-height:.8;padding-right:.06em;color:var(--gold);background:var(--metal);background-size:240% 100%;background-position:100% 0;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:sheen 2.4s var(--ease) .7s forwards}
+@keyframes sheen{to{background-position:0 0}}
+html.g1 .tag,html.g2 .tag{border-color:rgba(216,187,122,.5);color:var(--gold-hi);background:rgba(216,187,122,.06)}
+html.g1 .meta span:last-child,html.g2 .meta span:last-child{color:var(--gold)}
+html.g1 .num,html.g2 .num{border-color:rgba(216,187,122,.45);color:var(--gold)}
+html.g1 .step,html.g2 .step{border-left-color:rgba(216,187,122,.22)}
+html.g1 .more,html.g2 .more{color:var(--gold-hi)}
+html.g1 .links a:hover,html.g2 .links a:hover,html.g1 .fcols a:hover,html.g2 .fcols a:hover{color:var(--gold-hi)}
+html.g1 .note small,html.g2 .note small{color:var(--gold)}
+html.g1 .fbrand i,html.g2 .fbrand i{color:var(--gold)}
+html.g1 .gdot,html.g2 .gdot{color:var(--gold)}
+html.g1 .crop::after,html.g2 .crop::after,html.g1 .tile::before,html.g2 .tile::before{content:"";position:absolute;inset:0;z-index:2;border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(216,187,122,0);transition:box-shadow .5s var(--ease);pointer-events:none}
+html.g1 .card:hover .crop::after,html.g2 .card:hover .crop::after,html.g1 .tile:hover::before,html.g2 .tile:hover::before{box-shadow:inset 0 0 0 1px rgba(216,187,122,.6)}
+html.g1 header.on .bar,html.g2 header.on .bar{border-color:rgba(216,187,122,.16)}
+/* level 2: a little more gold */
+.gsep{display:none}
+html.g2 .gsep{display:flex;align-items:center;justify-content:center;gap:18px;padding:0 24px;background:var(--bg);color:var(--gold);font-size:15px}
+html.g2 .gsep::before,html.g2 .gsep::after{content:"";width:min(120px,22vw);height:1px;background:rgba(216,187,122,.45)}
+html.g2 .btn:not(.ghost):not(.sm){background:var(--metal);background-size:200% 100%;background-position:40% 0;color:#241a08;transition:transform .35s var(--spring),background-position .7s var(--ease)}
+html.g2 .btn:not(.ghost):not(.sm):hover{background-position:0 0}
+html.g2 .btn.sm{background:transparent;color:var(--gold-hi);box-shadow:inset 0 0 0 1px rgba(216,187,122,.6)}
+html.g2 .hero::after{content:"";position:absolute;right:6%;bottom:-18%;width:60vw;height:60vh;background:radial-gradient(closest-side,rgba(216,187,122,.14),transparent);pointer-events:none}
+html.g2 .state h2{color:var(--gold-hi)}
+html.g2 .note{border-color:rgba(216,187,122,.14)}
+html.g2 .note:hover{border-color:rgba(216,187,122,.5)}
+html.g2 .ghost-mark{color:rgba(216,187,122,.07)}
+html.g2 footer{border-top-color:rgba(216,187,122,.25)}
+/* finish switch */
+.fbar{position:relative;display:flex;align-items:center;justify-content:space-between;gap:16px 24px;flex-wrap:wrap;margin-top:72px;padding-top:24px;border-top:1px solid rgba(255,255,255,.06);transition:border-color .4s}
+html.g1 .fbar{border-top-color:rgba(216,187,122,.12)}
+html.g2 .fbar{border-top-color:rgba(216,187,122,.22)}
+.fbar .legal{margin:0;padding:0;border:0}
+.finish{display:flex;align-items:center;gap:4px;font-size:13px;color:#8a8580}
+.finish span{margin-right:6px}
+.finish button{position:relative;width:36px;height:36px;padding:0;border:0;border-radius:50%;background:transparent;cursor:pointer}
+.finish i{position:absolute;inset:9px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(255,255,255,.2);transition:transform .35s var(--spring)}
+.finish button:hover i{transform:scale(1.15)}
+.finish button::after{content:"";position:absolute;inset:4px;border-radius:50%;box-shadow:inset 0 0 0 1px transparent;transition:box-shadow .3s}
+.finish button[aria-pressed=true]::after{box-shadow:inset 0 0 0 1px var(--gold)}
+.finish [data-g="0"] i{background:#1c1917}
+.finish [data-g="1"] i{background:#ecd9a8}
+.finish [data-g="2"] i{background:var(--metal)}
+@media (prefers-reduced-motion:reduce){html.g1 h1 em,html.g2 h1 em{background-position:0 0;animation:none}}
+</style>
+</head>
+<body>
+<header id="hd">
+  <nav class="bar" aria-label="Main">
+    <a class="logo" href="#top">JNL STUDIO</a>
+    <div class="links"><a href="#shop">Pieces</a><a href="#collections">Collections</a><a href="#wear">How to Wear</a><a href="#notes">Notes</a></div>
+    <a class="btn sm" href="#join">Join the List</a>
+    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg></button>
+  </nav>
+</header>
+<div class="menu" id="menu"><a href="#shop">Pieces</a><a href="#collections">Collections</a><a href="#wear">How to Wear</a><a href="#notes">Notes</a><a class="btn" href="#join" style="margin-top:12px;font-size:1.125rem;letter-spacing:0">Join the List</a></div>
+
+<main id="top">
+<section class="hero">
+  <div class="hero-art"><img src="assets/gold-flower-dark.jpg" alt="Gold flower hoop earrings on a dark surface"></div>
+  <div class="wrap"><div class="hero-in">
+    <span class="tag load">Jewellery Studio</span>
+    <h1 class="load" style="--d:.08s">Drawn<br><em>Together.</em></h1>
+    <p class="load" style="--d:.16s">Pieces that hold a feeling close. Small sculptural jewellery to wear your own way.</p>
+    <div class="acts load" style="--d:.24s"><a class="btn" href="#shop">View the Pieces</a><a class="btn ghost" href="#collections">Collections</a></div>
+  </div></div>
+</section>
+
+<section class="shop" id="shop"><div class="wrap">
+  <h2 data-r>The Pieces.</h2>
+  <p class="sec-lead" data-r style="--d:80ms">Each one is made to be noticed quietly.</p>
+  <div class="cards">
+    <article class="card" data-r>
+      <div class="crop"><img src="assets/stone-ring-dark.jpg" alt="Open silver-tone ring with a pale green stone" loading="lazy"><img class="alt" src="assets/stone-ring-model.jpg" alt="" loading="lazy"></div>
+      <div class="meta"><span>Stone Ring</span><span>Ring</span></div>
+    </article>
+    <article class="card" data-r style="--d:150ms">
+      <div class="crop"><img src="assets/wide-ring-dark.jpg" alt="Wide hammered silver-tone ring" loading="lazy"><img class="alt" src="assets/wide-ring-hand.jpg" alt="" loading="lazy"></div>
+      <div class="meta"><span>Wide Ring</span><span>Ring</span></div>
+    </article>
+    <article class="card" data-r style="--d:300ms">
+      <div class="crop"><img src="assets/skeleton-ring.jpg" alt="Silver-tone ring shaped like a skeleton" loading="lazy"><img class="alt" src="assets/skeleton-ring-hand.jpg" alt="" loading="lazy"></div>
+      <div class="meta"><span>Skeleton Ring</span><span>Ring</span></div>
+    </article>
+    <article class="card" data-r>
+      <div class="crop"><img src="assets/blue-flower-dark.jpg" alt="Pale blue enamel flower stud earrings" loading="lazy"><img class="alt" src="assets/blue-flower-model.jpg" alt="" loading="lazy"></div>
+      <div class="meta"><span>Blue Flower Studs</span><span>Earrings</span></div>
+    </article>
+    <article class="card" data-r style="--d:150ms">
+      <div class="crop"><img src="assets/swirl-navy.jpg" alt="Gold ribbed swirl hoop earrings on navy satin" loading="lazy"><img class="alt" src="assets/swirl-model.jpg" alt="" loading="lazy"></div>
+      <div class="meta"><span>Gold Swirl Hoops</span><span>Earrings</span></div>
+    </article>
+    <article class="card" data-r style="--d:300ms">
+      <div class="crop"><img src="assets/pearl-tile.jpg" alt="Pearl bracelet with a gold chain on green tile" loading="lazy"><img class="alt" src="assets/pearl-model.jpg" alt="" loading="lazy"></div>
+      <div class="meta"><span>Pearl Bracelet</span><span>Bracelet</span></div>
+    </article>
+  </div>
+  <a class="more" href="#collections" data-r="fade">See All Collections</a>
+</div></section>
+
+<section class="process" id="wear">
+  <div class="proc-art" data-r="art"><img src="assets/wide-ring-navy.jpg" alt="" loading="lazy"></div>
+  <div class="wrap proc">
+    <div class="proc-l">
+      <h2 data-r="left">Worn<br>Your Way.</h2>
+      <p class="sec-lead" data-r="fade" style="--d:200ms">No rules, only three simple ways to begin.</p>
+    </div>
+    <div class="steps">
+      <div class="step" data-r="left"><span class="num">01</span><h3>Start With One</h3><p>Choose the piece you keep looking at. Let it be the only thing you need to notice today.</p></div>
+      <div class="step" data-r="left"><span class="num">02</span><h3>Mix the Metals</h3><p>Silver and gold tones sit well together. Pair a sculptural ring with a soft flower earring.</p></div>
+      <div class="step" data-r="left"><span class="num">03</span><h3>Keep It Close</h3><p>Wear it often enough that it starts to feel like yours. That is the whole idea.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="arch" id="collections"><div class="wrap">
+  <h2 data-r>The Collections.</h2>
+  <p class="sec-lead" data-r style="--d:80ms">Rings, earrings and bracelets, photographed the way they are worn.</p>
+  <div class="bento">
+    <a class="tile wide" href="#shop" data-r="scale"><img src="assets/wide-ring-hand.jpg" alt="" style="--p:50% 58%;--z:1.05" loading="lazy"><div><h3>Rings</h3><p>Sculptural silver-tone shapes.</p></div></a>
+    <a class="tile" href="#shop" data-r="scale" style="--d:100ms"><img src="assets/gold-flower-model.jpg" alt="" style="--p:50% 30%;--z:1.05" loading="lazy"><div><h3>Earrings</h3></div></a>
+    <a class="tile" href="#shop" data-r="scale" style="--d:200ms"><img src="assets/pearl-wrist.jpg" alt="" style="--z:1.05" loading="lazy"><div><h3>Bracelets</h3></div></a>
+    <a class="tile" href="#shop" data-r="scale" style="--d:300ms"><img src="assets/swirl-tile.jpg" alt="" style="--z:1.05" loading="lazy"><div><h3>Gold Tones</h3></div></a>
+    <a class="tile" href="#shop" data-r="scale" style="--d:400ms"><img src="assets/wide-ring-black.jpg" alt="" style="--z:1.05" loading="lazy"><div><h3>Silver Tones</h3></div></a>
+  </div>
+</div></section>
+
+<section class="notes" id="notes"><div class="notes-art" data-r="art2"><img src="assets/blue-silver-dark.jpg" alt="" loading="lazy"></div><div class="wrap">
+  <div class="notes-h" data-r><h2>Studio Notes.</h2></div>
+  <div class="nt">
+    <article class="note" data-r><p>A good ring should change how your hand feels before anyone else notices it.</p><small>On rings</small></article>
+    <article class="note" data-r style="--d:100ms"><p>One flower is enough. Tie your hair back and let the earring do the talking.</p><small>On earrings</small></article>
+    <article class="note" data-r style="--d:200ms"><p>Pearls look softest against plain linen, warm skin and a little afternoon light.</p><small>On pearls</small></article>
+    <article class="note" data-r style="--d:300ms"><p>Keep each piece dry and stored on its own, and it will stay ready for the next outing.</p><small>Care</small></article>
+    <article class="note" data-r style="--d:400ms"><p>We like jewellery with a small strange detail. It gives people something to ask about.</p><small>Design</small></article>
+  </div>
+</div></section>
+
+<section class="state">
+  <img src="assets/stone-ring-black.jpg" alt="" loading="lazy">
+  <div class="wrap"><div data-r><h2>Simply, Yours.</h2><p>Jewellery to wear your own way.</p></div></div>
+</section>
+
+<section class="join" id="join"><div class="panel" data-r>
+  <img src="assets/swirl-navy.jpg" alt="" loading="lazy">
+  <div><h2>Join the List.</h2><p>Be first to hear about new pieces from JNL STUDIO.</p>
+  <a class="btn" id="joinBtn" href="mailto:jnlstudio.design@gmail.com?subject=Join%20the%20JNL%20STUDIO%20list&body=Please%20add%20me%20to%20the%20JNL%20STUDIO%20list.">Email Us to Join →</a>
+  <p class="mail">Or email <a href="mailto:jnlstudio.design@gmail.com">jnlstudio.design@gmail.com</a></p></div>
+</div></section>
+</main>
+
+<footer>
+  <div class="ghost-mark" aria-hidden="true">JNL STUDIO</div>
+  <div class="wrap">
+    <div class="fgrid">
+      <div class="fbrand"><b>JNL STUDIO</b><i>Simply, yours.</i><p>Sculptural jewellery for quiet everyday moments.</p></div>
+      <div class="fcols">
+        <div><h3>Explore</h3><ul><li><a href="#shop">The Pieces</a></li><li><a href="#collections">Collections</a></li><li><a href="#wear">How to Wear</a></li></ul></div>
+        <div><h3>Studio</h3><ul><li><a href="#notes">Notes</a></li><li><a href="#join">Join the List</a></li></ul></div>
+      </div>
+    </div>
+    <div class="fbar">
+      <p class="legal">© 2026 JNL STUDIO.</p>
+      <div class="finish" id="finish" role="group" aria-label="Choose a page finish"><span>Finish</span><button type="button" data-g="0" aria-label="Onyx finish" title="Onyx"><i></i></button><button type="button" data-g="1" aria-label="Champagne finish" title="Champagne"><i></i></button><button type="button" data-g="2" aria-label="Gold finish" title="Gold"><i></i></button></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const hd = document.getElementById('hd');
+  const onScroll = () => hd.classList.toggle('on', scrollY > 40);
+  addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+  const burger = document.getElementById('burger'), menu = document.getElementById('menu');
+  const toggle = open => { menu.classList.toggle('open', open); burger.setAttribute('aria-expanded', open); burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu'); };
+  burger.addEventListener('click', () => toggle(!menu.classList.contains('open')));
+  menu.addEventListener('click', e => { if (e.target.closest('a')) toggle(false); });
+  addEventListener('keydown', e => { if (e.key === 'Escape') toggle(false); });
+
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }), {rootMargin:'0px 0px -10% 0px'});
+  document.querySelectorAll('[data-r]').forEach(el => io.observe(el));
+
+})();
+</script>
+<script>
+(() => {
+  document.querySelectorAll('h2').forEach(h => { const t = h.lastChild; if (t && t.nodeType === 3 && t.data.endsWith('.')) { t.data = t.data.slice(0, -1); const s = document.createElement('span'); s.className = 'gdot'; s.textContent = '.'; h.append(s); } });
+  document.querySelectorAll('.shop,.arch,.notes,.join').forEach(sec => { const d = document.createElement('div'); d.className = 'gsep'; d.setAttribute('aria-hidden', 'true'); d.textContent = '✧'; sec.before(d); });
+  const r = document.documentElement, b = [...document.querySelectorAll('#finish button')];
+  const now = () => r.classList.contains('g1') ? 1 : r.classList.contains('g2') ? 2 : 0;
+  const mark = g => b.forEach(x => x.setAttribute('aria-pressed', x.dataset.g === String(g)));
+  b.forEach(x => x.addEventListener('click', () => {
+    const g = +x.dataset.g;
+    r.classList.remove('g1', 'g2'); if (g) r.classList.add('g' + g);
+    mark(g);
+    try { localStorage.setItem('jnl-finish', String(g)); } catch (e) {}
+  }));
+  mark(now());
+})();
+</script>
+</body>
+</html>
