@@ -226,6 +226,17 @@ html.g2 footer{border-top-color:rgba(216,187,122,.25)}
 html.g1 .fbar{border-top-color:rgba(216,187,122,.12)}
 html.g2 .fbar{border-top-color:rgba(216,187,122,.22)}
 .fbar .legal{margin:0;padding:0;border:0}
+/* footer: next stop */
+.fnext{position:relative;display:flex;flex-wrap:wrap;align-items:center;gap:0 36px;margin-top:32px}
+.fnext+.fbar{margin-top:24px}
+.fnext a{display:inline-flex;align-items:center;gap:10px;min-height:44px;transition:color .25s}
+.fnext .go{font-size:15px;font-weight:500;letter-spacing:-.005em;color:var(--ink)}
+.fnext .back{font-size:13px;color:#8a8580}
+.fnext .back:hover{color:var(--soft)}
+.fnext svg{width:18px;height:10px;fill:none;stroke:currentColor;stroke-width:1;flex:none;transition:transform .45s var(--ease)}
+.fnext a:hover svg{transform:translateX(4px)}
+html.g1 .fnext .go,html.g2 .fnext .go{color:var(--gold-hi)}
+@media (max-width:520px){.fnext{flex-direction:column;align-items:flex-start;gap:0}}
 .finish{display:flex;align-items:center;gap:4px;font-size:13px;color:#8a8580}
 .finish span{margin-right:6px}
 .finish button{position:relative;width:36px;height:36px;padding:0;border:0;border-radius:50%;background:transparent;cursor:pointer}
@@ -354,6 +365,10 @@ html.g2 .fbar{border-top-color:rgba(216,187,122,.22)}
         <div><h3>Studio</h3><ul><li><a href="#notes">Notes</a></li><li><a href="#join">Join the List</a></li></ul></div>
       </div>
     </div>
+    <nav class="fnext" aria-label="More from JNL">
+      <a class="go" href="https://jnlstudio.github.io/JNLPersonalised/">Continue to JNL Personalised <svg viewBox="0 0 18 10" aria-hidden="true"><path d="M0 5h17M12.5 .75 17 5l-4.5 4.25"/></svg></a>
+      <a class="back" href="https://jnlstudio.github.io/Jewellery/">Back to JNL Studio <svg viewBox="0 0 18 10" aria-hidden="true"><path d="M0 5h17M12.5 .75 17 5l-4.5 4.25"/></svg></a>
+    </nav>
     <div class="fbar">
       <p class="legal">© 2026 JNL STUDIO.</p>
       <div class="finish" id="finish" role="group" aria-label="Choose a page finish"><span>Finish</span><button type="button" data-g="0" aria-label="Onyx finish" title="Onyx"><i></i></button><button type="button" data-g="1" aria-label="Champagne finish" title="Champagne"><i></i></button><button type="button" data-g="2" aria-label="Gold finish" title="Gold"><i></i></button></div>
