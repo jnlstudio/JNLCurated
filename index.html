@@ -183,6 +183,25 @@ footer{position:relative;padding:128px 0 40px;background:#09090b;border-top:1px 
   .fgrid{grid-template-columns:1fr}
 }
 @media (max-width:520px){.fcols{grid-template-columns:1fr 1fr}}
+/* mobile only: The Pieces as a two-column album */
+@media (max-width:860px){
+  #shop{padding-top:64px;scroll-margin-top:-72px}
+  #shop h2{margin-bottom:10px}
+  #shop .sec-lead{font-size:1.0625rem;line-height:1.5}
+  #shop .cards{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:12px;row-gap:22px;margin-top:24px}
+  #shop .card{grid-column:auto}
+  #shop .card .crop{aspect-ratio:1/1;border-radius:1.25rem}
+  #shop .meta{display:block;padding:9px 2px 0;font-size:15px;line-height:1.3;overflow-wrap:break-word}
+  #shop .meta span{display:block}
+  #shop .meta span:last-child{margin-top:2px;font-size:14px}
+  #shop .card:nth-child(1) img:first-child{--p:48% 57%;--z:1.3}
+  #shop .card:nth-child(2) img:first-child{--p:50% 50%;--z:1.06}
+  #shop .card:nth-child(3) img:first-child{--p:52% 46%;--z:1.04}
+  #shop .card:nth-child(4) img:first-child{--p:50% 50%;--z:1.04}
+  #shop .card:nth-child(5) img:first-child{--p:50% 54%;--z:1.06}
+  #shop .card:nth-child(6) img:first-child{--p:50% 44%;--z:1.04}
+  #shop .more{margin-top:40px}
+}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0ms!important;transition-duration:.01ms!important;transition-delay:0ms!important}
