@@ -79,10 +79,13 @@ const slides = files
 
 writeFileSync(outFile, JSON.stringify({ slides }, null, 2) + '\n');
 
-// Put the first slide straight into the page so it starts loading before any script runs.
+// Put the slide list into the page, plus a tiny script that picks a random first photo
+// and a random order on every visit, before any photo starts downloading.
 const first = slides[0] || FALLBACK;
 const esc = v => String(v).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
-const tag = `<!--hero-first--><img class="hs on" src="${esc(first.src)}" alt="${esc(first.alt)}" data-tone="${first.tone}" style="--pd:${first.focus.desktop};--pm:${first.focus.mobile}" fetchpriority="high" onerror="this.onerror=null;this.src='${FALLBACK.src}'"><!--/hero-first-->`;
+const data = JSON.stringify({ slides }).replace(/</g, '\\u003c');
+const pick = `(()=>{const F=${JSON.stringify(FALLBACK)};let L=[];try{L=JSON.parse(document.getElementById('heroData').textContent).slides||[]}catch(e){}if(!L.length)L=[F];const o=L.map((_,i)=>i);for(let i=o.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[o[i],o[j]]=[o[j],o[i]]}let last=null;try{last=localStorage.getItem('jnl-hero-last')}catch(e){}if(o.length>1&&L[o[0]].src===last){const k=1+(Math.random()*(o.length-1)|0);[o[0],o[k]]=[o[k],o[0]]}const list=o.map(i=>L[i]),s=list[0],f=s.focus||{};try{localStorage.setItem('jnl-hero-last',s.src)}catch(e){}window.__hero={list};const img=document.getElementById('heroFirst');img.alt=s.alt||'';img.dataset.tone=s.tone||'neutral';img.style.setProperty('--pd',f.desktop||'50% 50%');img.style.setProperty('--pm',f.mobile||f.desktop||'50% 50%');img.onerror=()=>{img.onerror=null;img.src=F.src};img.src=s.src;const t=document.querySelector('.hero-tone');if(t)t.dataset.tone=['onyx','olive','navy'].includes(s.tone)?s.tone:'neutral'})()`;
+const tag = `<!--hero-first--><img class="hs on" id="heroFirst" alt="" data-tone="${first.tone}" fetchpriority="high"><script id="heroData" type="application/json">${data}</script><script>${pick}</script><noscript><img class="hs on" src="${esc(first.src)}" alt="${esc(first.alt)}" style="--pd:${first.focus.desktop};--pm:${first.focus.mobile}"></noscript><!--/hero-first-->`;
 const html = readFileSync(htmlFile, 'utf8');
 const re = /<!--hero-first-->[\s\S]*?<!--\/hero-first-->/;
 if (re.test(html)) {
