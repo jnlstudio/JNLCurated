@@ -63,7 +63,8 @@ header.on .bar{background:rgba(24,24,27,.7);-webkit-backdrop-filter:blur(12px);b
 /* hero slideshow controls */
 .hero-ctl{position:absolute;left:0;right:0;bottom:28px;z-index:3;pointer-events:none}
 .hero-ctl [hidden]{display:none!important}
-.hc{display:flex;align-items:center;width:max-content;margin-left:auto;padding:2px;border-radius:999px;background:rgba(12,10,9,.46);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.1);pointer-events:auto}
+.hc{display:flex;align-items:center;width:max-content;margin-left:auto;padding:2px;border-radius:999px;background:rgba(12,10,9,.2);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.05);pointer-events:auto;opacity:.62;transition:opacity .4s ease,background-color .4s ease,border-color .4s ease}
+.hc:hover,.hc:focus-within{opacity:1;background:rgba(12,10,9,.4);border-color:rgba(255,255,255,.1)}
 .hc button{position:relative;display:grid;place-items:center;min-width:44px;height:44px;padding:0;border:0;border-radius:999px;background:transparent;color:var(--ink);cursor:pointer}
 .hc button:focus-visible{outline:2px solid var(--ink);outline-offset:-5px}
 .hc svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
@@ -198,7 +199,7 @@ footer{position:relative;padding:128px 0 40px;background:#09090b;border-top:1px 
   .hero-art::after{background:linear-gradient(to bottom,rgba(0,0,0,.55) 0,rgba(0,0,0,0) 20%)}
   .hero-tone i{background:linear-gradient(to bottom,var(--c) 0%,var(--c) 34%,transparent 80%)}
   .hero-ctl{bottom:24px}
-  .hc{margin-left:0}
+  .hc{margin-left:auto;margin-right:auto}
   .cards{grid-template-columns:minmax(0,1fr);gap:40px}
   .nt{grid-template-columns:minmax(0,1fr)}
   .card{grid-column:1/-1;margin-top:0!important}
