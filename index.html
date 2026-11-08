@@ -47,7 +47,29 @@ header.on .bar{background:rgba(24,24,27,.7);-webkit-backdrop-filter:blur(12px);b
 /* hero */
 .hero{position:relative;min-height:100dvh;display:flex;align-items:center;padding:96px 0 48px;background:#000;overflow:hidden}
 .hero-art{position:absolute;top:50%;right:-4%;width:min(64vw,920px);height:125vh;transform:translateY(-50%);opacity:0;animation:art 1.5s var(--ease) .3s forwards;-webkit-mask-image:linear-gradient(to right,transparent 5%,#000 36%);mask-image:linear-gradient(to right,transparent 5%,#000 36%)}
-.hero-art img{width:100%;height:100%;object-fit:cover;object-position:50% 50%;transition:transform 1.5s var(--ease),filter 1.5s var(--ease)}
+.hero-art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:var(--pd,50% 50%);opacity:0;transition:opacity .8s ease,transform 1.5s var(--ease),filter 1.5s var(--ease)}
+.hero-art img.on{opacity:1}
+.hero-art img.top{z-index:1}
+.hero-art::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(to bottom,rgba(0,0,0,.72) 10%,rgba(0,0,0,.3) 19%,rgba(0,0,0,0) 30%)}
+/* hero slideshow: edge colour behind each photo */
+.hero-tone{position:absolute;inset:0;pointer-events:none}
+.hero-tone i{position:absolute;inset:0;opacity:0;transition:opacity .8s ease;background:radial-gradient(64% 92% at 84% 50%,var(--c) 0%,transparent 74%)}
+.t-onyx{--c:#1b1511}.t-olive{--c:#17200f}.t-navy{--c:#0b1427}.t-neutral{--c:#121212}
+.hero-tone[data-tone=onyx] .t-onyx,.hero-tone[data-tone=olive] .t-olive,.hero-tone[data-tone=navy] .t-navy,.hero-tone[data-tone=neutral] .t-neutral{opacity:1}
+/* hero slideshow controls */
+.hero-ctl{position:absolute;left:0;right:0;bottom:28px;z-index:3;pointer-events:none}
+.hero-ctl [hidden]{display:none!important}
+.hc{display:flex;align-items:center;width:max-content;margin-left:auto;padding:2px;border-radius:999px;background:rgba(12,10,9,.46);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.1);pointer-events:auto}
+.hc button{position:relative;display:grid;place-items:center;min-width:44px;height:44px;padding:0;border:0;border-radius:999px;background:transparent;color:var(--ink);cursor:pointer}
+.hc button:focus-visible{outline:2px solid var(--ink);outline-offset:-5px}
+.hc svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.hc-dots,.hc-step{display:flex;align-items:center}
+.hc-dots button{min-width:30px}
+.hc-dots button::before{content:"";width:6px;height:6px;border-radius:999px;background:rgba(255,255,255,.42);transition:width .3s var(--ease),background-color .3s}
+.hc-dots button:hover::before{background:rgba(255,255,255,.75)}
+.hc-dots button[aria-current=true]::before{width:20px;background:var(--ink)}
+.hc-count{min-width:56px;text-align:center;font-size:12px;letter-spacing:.08em;font-variant-numeric:tabular-nums;color:#e7e5e4}
+.hc-play .i-play{display:none}.hc-play[data-state=paused] .i-play{display:block}.hc-play[data-state=paused] .i-pause{display:none}
 .hero-art:hover img{transform:scale(1.04);filter:brightness(.92) contrast(1.08)}
 @keyframes art{from{opacity:0;scale:.9}to{opacity:1;scale:1}}
 .hero .wrap{position:relative;width:100%}
@@ -165,8 +187,14 @@ footer{position:relative;padding:128px 0 40px;background:#09090b;border-top:1px 
   .links,header .btn{display:none}
   .burger{display:block}
   .bar{padding:8px 8px 8px 20px}
-  .hero{align-items:flex-end;padding-bottom:40px}
+  .hero{align-items:flex-end;padding-bottom:96px;touch-action:pan-y pinch-zoom}
   .hero-art{right:-22%;top:0;width:128vw;height:72vh;transform:none;-webkit-mask-image:linear-gradient(to bottom,#000 55%,transparent);mask-image:linear-gradient(to bottom,#000 55%,transparent)}
+  .hero-art{right:-10%;width:116vw;height:62vh;-webkit-mask-image:linear-gradient(to bottom,#000 48%,transparent 97%);mask-image:linear-gradient(to bottom,#000 48%,transparent 97%)}
+  .hero-art img{object-position:var(--pm,var(--pd,50% 50%))}
+  .hero-art::after{background:linear-gradient(to bottom,rgba(0,0,0,.55) 0,rgba(0,0,0,0) 20%)}
+  .hero-tone i{background:linear-gradient(to bottom,var(--c) 0%,var(--c) 34%,transparent 80%)}
+  .hero-ctl{bottom:24px}
+  .hc{margin-left:0}
   .cards{grid-template-columns:minmax(0,1fr);gap:40px}
   .nt{grid-template-columns:minmax(0,1fr)}
   .card{grid-column:1/-1;margin-top:0!important}
@@ -282,13 +310,19 @@ html.g1 .fnext .go,html.g2 .fnext .go{color:var(--gold-hi)}
 
 <main id="top">
 <section class="hero">
-  <div class="hero-art"><img src="assets/gold-flower-dark.jpg" alt="Gold flower hoop earrings on a dark surface"></div>
+  <div class="hero-tone" data-tone="onyx" aria-hidden="true"><i class="t-onyx"></i><i class="t-olive"></i><i class="t-navy"></i><i class="t-neutral"></i></div>
+  <div class="hero-art" id="heroArt" role="group" aria-roledescription="carousel" aria-label="Featured pieces"><!--hero-first--><img class="hs on" src="assets/hero-slides/01-onyx-flower-hoops.webp" alt="Gold flower hoop earrings on a dark surface" data-tone="onyx" style="--pd:50% 50%;--pm:56% 46%" fetchpriority="high" onerror="this.onerror=null;this.src='assets/gold-flower-dark.jpg'"><!--/hero-first--></div>
   <div class="wrap"><div class="hero-in">
     <span class="tag load">Jewellery Studio</span>
     <h1 class="load" style="--d:.08s">Drawn<br><em>Together.</em></h1>
     <p class="load" style="--d:.16s">Pieces that hold a feeling close. Small sculptural jewellery to wear your own way.</p>
     <div class="acts load" style="--d:.24s"><a class="btn" href="#shop">View the Pieces</a><a class="btn ghost" href="#collections">Collections</a></div>
   </div></div>
+  <div class="hero-ctl" id="heroCtl" hidden><div class="wrap"><div class="hc" role="group" aria-label="Slideshow controls">
+    <button class="hc-play" id="hcPlay" type="button" aria-label="Pause slideshow" data-state="playing"><svg class="i-pause" viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 3.5v9M10.5 3.5v9"/></svg><svg class="i-play" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.2v9.6L12.6 8z"/></svg></button>
+    <div class="hc-dots" id="hcDots" hidden></div>
+    <div class="hc-step" id="hcStep" hidden><button type="button" id="hcPrev" aria-label="Previous slide"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3.5 5.5 8l4.5 4.5"/></svg></button><span class="hc-count" id="hcCount" aria-live="polite" aria-atomic="true">01 / 01</span><button type="button" id="hcNext" aria-label="Next slide"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3.5 4.5 4.5L6 12.5"/></svg></button></div>
+  </div></div></div>
 </section>
 
 <section class="shop" id="shop"><div class="wrap">
@@ -428,6 +462,159 @@ html.g1 .fnext .go,html.g2 .fnext .go{color:var(--gold-hi)}
     try { localStorage.setItem('jnl-finish', String(g)); } catch (e) {}
   }));
   mark(now());
+})();
+</script>
+<script>
+/* Hero slideshow. Photos come from assets/hero-slides/ via assets/hero-slides.json (built automatically). */
+(async () => {
+  const HOLD = 9000, FADE = 800;
+  const FALLBACK = { src: 'assets/gold-flower-dark.jpg', tone: 'onyx', alt: 'Gold flower hoop earrings on a dark surface', focus: { desktop: '50% 50%', mobile: '50% 50%' } };
+  const hero = document.querySelector('.hero'), art = document.getElementById('heroArt'), tone = hero.querySelector('.hero-tone');
+  const ctl = document.getElementById('heroCtl'), playBtn = document.getElementById('hcPlay'), dots = document.getElementById('hcDots');
+  const step = document.getElementById('hcStep'), count = document.getElementById('hcCount');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  const pad = n => String(n).padStart(2, '0');
+  const sameSrc = (img, src) => img && new URL(img.getAttribute('src'), location.href).href === new URL(src, location.href).href;
+
+  const make = s => {
+    const img = new Image();
+    img.className = 'hs'; img.alt = s.alt || ''; img.decoding = 'async'; img.dataset.tone = s.tone || 'neutral';
+    img.style.setProperty('--pd', (s.focus && s.focus.desktop) || '50% 50%');
+    img.style.setProperty('--pm', (s.focus && s.focus.mobile) || (s.focus && s.focus.desktop) || '50% 50%');
+    img.setAttribute('aria-hidden', 'true');
+    img.src = s.src;
+    art.append(img);
+    return img;
+  };
+
+  let list = null;
+  try {
+    const r = await fetch('assets/hero-slides.json', { cache: 'no-cache' });
+    if (!r.ok) throw new Error(r.status);
+    const j = await r.json();
+    if (Array.isArray(j.slides)) list = j.slides.filter(s => s && typeof s.src === 'string');
+  } catch (e) { list = null; }
+
+  let current = art.querySelector('img.hs.on');
+  const pageOk = current && !(current.complete && !current.naturalWidth);
+  // List missing or empty: keep the photo already on the page if it loaded, else the fallback photo.
+  if ((!list || !list.length) && pageOk) list = [{ src: current.getAttribute('src'), tone: current.dataset.tone, alt: current.alt }];
+  const slides = (list && list.length ? list : [FALLBACK]).map(s => ({ ...s, img: null, ready: null }));
+
+  // Load (and decode) one slide; resolves true if it can be shown.
+  const load = s => s.ready || (s.ready = new Promise(res => {
+    const img = s.img || (s.img = make(s));
+    const ok = () => Promise.race([img.decode ? img.decode().catch(() => {}) : null, new Promise(r => setTimeout(r, 1200))]).then(() => res(true));
+    if (img.complete && img.naturalWidth) ok();
+    else { img.addEventListener('load', ok, { once: true }); img.addEventListener('error', () => res(false), { once: true }); }
+  }));
+
+  let idx = 0, playing = !reduce.matches, timer = 0, busy = false, token = 0;
+
+  // The photo already in the page is slide 1 when it matches; otherwise fade to the real slide 1.
+  if (pageOk && sameSrc(current, slides[0].src)) {
+    slides[0].img = current;
+    slides[0].ready = load(slides[0]);
+    current.removeAttribute('aria-hidden');
+  }
+
+  const setTone = t => { tone.dataset.tone = ['onyx', 'olive', 'navy'].includes(t) ? t : 'neutral'; };
+
+  function paint(img) {
+    if (img === current) return;
+    img.classList.add('on', 'top');
+    img.removeAttribute('aria-hidden');
+    const old = current; current = img;
+    if (old) {
+      old.classList.remove('top');
+      old.setAttribute('aria-hidden', 'true');
+      setTimeout(() => { if (old !== current) old.classList.remove('on'); }, FADE + 60);
+    }
+  }
+
+  function renderControls() {
+    const n = slides.length;
+    ctl.hidden = n < 2;
+    if (n < 2) { clearTimeout(timer); return; }
+    const useDots = n <= 4;
+    dots.hidden = !useDots; step.hidden = useDots;
+    if (useDots) {
+      if (dots.children.length !== n) {
+        dots.replaceChildren(...slides.map((s, i) => {
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.setAttribute('aria-label', `Show slide ${i + 1} of ${n}: ${s.alt || 'photo'}`);
+          b.addEventListener('click', () => go(i, true));
+          return b;
+        }));
+      }
+      [...dots.children].forEach((b, i) => b.setAttribute('aria-current', i === idx ? 'true' : 'false'));
+    } else count.textContent = `${pad(idx + 1)} / ${pad(n)}`;
+    playBtn.dataset.state = playing ? 'playing' : 'paused';
+    playBtn.setAttribute('aria-label', playing ? 'Pause slideshow' : 'Play slideshow');
+  }
+
+  function schedule() {
+    clearTimeout(timer);
+    if (!playing || slides.length < 2 || document.hidden) return;
+    timer = setTimeout(() => go(idx + 1, false), HOLD);
+  }
+
+  // Show slide i once it has loaded; broken photos are dropped from the rotation.
+  async function go(i, manual) {
+    if (manual) { playing = false; clearTimeout(timer); }
+    const my = ++token;
+    let tries = slides.length;
+    while (tries-- > 0 && slides.length) {
+      const k = ((i % slides.length) + slides.length) % slides.length;
+      const s = slides[k];
+      const ok = await load(s);
+      if (my !== token) return;              // a newer request took over
+      if (ok) {
+        idx = k; paint(s.img); setTone(s.tone);
+        renderControls(); schedule();
+        if (slides.length > 1) load(slides[(idx + 1) % slides.length]); // get the next one ready
+        return;
+      }
+      if (s.img) s.img.remove();
+      slides.splice(k, 1);
+      if (k < idx) idx--;
+      i = k;                                 // same position now holds the next photo
+    }
+    if (!slides.length) {                    // nothing usable: static fallback photo
+      const f = { ...FALLBACK, img: null, ready: null }; slides.push(f);
+      if (await load(f)) { paint(f.img); setTone(f.tone); }
+      idx = 0;
+    }
+    renderControls();
+  }
+
+  playBtn.addEventListener('click', () => {
+    playing = !playing; renderControls();
+    if (playing) go(idx + 1, false); else clearTimeout(timer);
+  });
+  document.getElementById('hcPrev').addEventListener('click', () => go(idx - 1, true));
+  document.getElementById('hcNext').addEventListener('click', () => go(idx + 1, true));
+  ctl.addEventListener('keydown', e => {
+    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+    e.preventDefault();
+    go(idx + (e.key === 'ArrowRight' ? 1 : -1), true);
+    requestAnimationFrame(() => { const a = dots.hidden ? null : dots.children[idx]; if (a && dots.contains(document.activeElement)) a.focus(); });
+  });
+
+  // Swipe left / right on the photo area (vertical scrolling is left alone).
+  let sx = 0, sy = 0, st = 0;
+  hero.addEventListener('touchstart', e => { const t = e.touches[0]; sx = t.clientX; sy = t.clientY; st = e.touches.length; }, { passive: true });
+  hero.addEventListener('touchend', e => {
+    if (st !== 1 || slides.length < 2) return;
+    const t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy;
+    if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.5) go(idx + (dx < 0 ? 1 : -1), true);
+  }, { passive: true });
+
+  document.addEventListener('visibilitychange', () => (document.hidden ? clearTimeout(timer) : schedule()));
+  reduce.addEventListener && reduce.addEventListener('change', () => { if (reduce.matches) { playing = false; clearTimeout(timer); renderControls(); } });
+
+  await go(0, false);
 })();
 </script>
 </body>
