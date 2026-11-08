@@ -50,6 +50,10 @@ header.on .bar{background:rgba(24,24,27,.7);-webkit-backdrop-filter:blur(12px);b
 .hero-art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:var(--pd,50% 50%);opacity:0;transition:opacity .8s ease,transform 1.5s var(--ease),filter 1.5s var(--ease)}
 .hero-art img.on{opacity:1}
 .hero-art img.top{z-index:1}
+/* slow zoom while each photo is on screen */
+.hero-art img.kb{animation:kb 14s cubic-bezier(.25,.3,.45,1) both}
+.hero.kb-hold .hero-art img.kb{animation-play-state:paused}
+@keyframes kb{from{scale:1}to{scale:1.07}}
 .hero-art::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(to bottom,rgba(0,0,0,.72) 10%,rgba(0,0,0,.3) 19%,rgba(0,0,0,0) 30%)}
 /* hero slideshow: edge colour behind each photo */
 .hero-tone{position:absolute;inset:0;pointer-events:none}
@@ -294,7 +298,7 @@ html.g1 .fnext .go,html.g2 .fnext .go{color:var(--gold-hi)}
 .finish [data-g="0"] i{background:#1c1917}
 .finish [data-g="1"] i{background:#ecd9a8}
 .finish [data-g="2"] i{background:var(--metal)}
-@media (prefers-reduced-motion:reduce){html.g1 h1 em,html.g2 h1 em{background-position:0 0;animation:none}}
+@media (prefers-reduced-motion:reduce){html.g1 h1 em,html.g2 h1 em{background-position:0 0;animation:none}.hero-art img.kb{animation:none}}
 </style>
 </head>
 <body>
@@ -524,15 +528,19 @@ html.g1 .fnext .go,html.g2 .fnext .go{color:var(--gold-hi)}
 
   const setTone = t => { tone.dataset.tone = ['onyx', 'olive', 'navy'].includes(t) ? t : 'neutral'; };
 
+  // Slow zoom: restart from 100% each time a photo comes on screen.
+  const zoom = img => { img.classList.remove('kb'); void img.offsetWidth; img.classList.add('kb'); };
+
   function paint(img) {
-    if (img === current) return;
+    if (img === current) { if (!img.classList.contains('kb')) zoom(img); return; }
+    zoom(img);
     img.classList.add('on', 'top');
     img.removeAttribute('aria-hidden');
     const old = current; current = img;
     if (old) {
       old.classList.remove('top');
       old.setAttribute('aria-hidden', 'true');
-      setTimeout(() => { if (old !== current) old.classList.remove('on'); }, FADE + 60);
+      setTimeout(() => { if (old !== current) old.classList.remove('on', 'kb'); }, FADE + 60);
     }
   }
 
@@ -595,6 +603,7 @@ html.g1 .fnext .go,html.g2 .fnext .go{color:var(--gold-hi)}
 
   playBtn.addEventListener('click', () => {
     playing = !playing; renderControls();
+    hero.classList.toggle('kb-hold', !playing);   // the pause button also holds the slow zoom
     if (playing) go(idx + 1, false); else clearTimeout(timer);
   });
   document.getElementById('hcPrev').addEventListener('click', () => go(idx - 1, true));
